@@ -18,6 +18,20 @@ return function (App $app) {
         $httpResponse = $httpClient->request('GET', getenv('CHALLENGE_GENERATE_URL') . getenv('CHALLENGE_TOKEN'));
         $httpResponseBody = $httpResponse->getBody();
 
+        $baseUploadFiles = __DIR__ . '/../tmp/uploads/';
+        $fileName = 'answer.json';
+  
+
+
+
+
+// Open the file to get existing content
+//$current = file_get_contents($file);
+// Append a new person to the file
+//$current .= "John Smith\n";
+// Write the contents back to the file
+file_put_contents($baseUploadFiles . $fileName, $httpResponseBody);
+
         $responseArr = json_decode($httpResponseBody, true);
 
         return $response->withJson($responseArr, 200);
