@@ -1,14 +1,11 @@
 {
-    "name": "slim/slim-skeleton",
-    "description": "A Slim Framework skeleton application for rapid development",
-    "keywords": ["microframework", "rest", "router", "psr7"],
-    "homepage": "http://github.com/slimphp/Slim-Skeleton",
+    "name": "dyarleniber/caesar-cipher",
+    "description": "Caesar cipher",
     "license": "MIT",
     "authors": [
         {
-            "name": "Josh Lockhart",
-            "email": "info@joshlockhart.com",
-            "homepage": "http://www.joshlockhart.com/"
+            "name": "Dyarlen Iber",
+            "email": "dyarlen1@gmail.com"
         }
     ],
     "require": {
@@ -24,7 +21,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "CaesarCipher\\": "src/"
         }
     },
     "config": {
@@ -32,7 +30,7 @@
         "sort-packages": true
     },
     "scripts": {
-        "start": "php -S localhost:8080 -t public",
+        "start": "php -S localhost:8022 -t public",
         "test": "phpunit"
     }
 }

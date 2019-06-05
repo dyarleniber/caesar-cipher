@@ -1,6 +1,6 @@
 .env
 /vendor/
 /logs/*
-!/logs/README.md
+!/logs/.gitkeep
 tmp/uploads/*
 !tmp/uploads/.gitkeep
