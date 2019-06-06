@@ -1,6 +1,6 @@
 <?php
 
-namespace CaesarCipher\Controllers\CaesarCipherController;
+namespace CaesarCipher\Controllers;
 
 use CaesarCipher\Actions\ChallengeFile;
 use CaesarCipher\Actions\Cipher;
@@ -26,7 +26,7 @@ class CaesarCipherController
             $challengeResponseObj->decifrado = $this->caesarDecipher($challengeResponseObj->cifrado, (int) $challengeResponseObj->numero_casas);
             $challengeResponseObj->resumo_criptografico = $this->calculateHash($challengeResponseObj->decifrado);
 
-            $saveFileResult = $this->saveChallengeFile();
+            $saveFileResult = $this->saveChallengeFile($challengeResponseObj);
             if (!$saveFileResult) {
                 return false;
             }
@@ -49,7 +49,7 @@ class CaesarCipherController
 
     protected function caesarDecipher(string $text, int $shift): string
     {
-        return $this->cipher->Decipher($text, $shift);
+        return $this->cipher->decipher($text, $shift);
     }
 
     protected function calculateHash(string $text): string
@@ -57,9 +57,9 @@ class CaesarCipherController
         return sha1($text);
     }
 
-    protected function saveChallengeFile(): bool
+    protected function saveChallengeFile(object $fileContent): bool
     {
-        return $this->challengeFile->save();
+        return $this->challengeFile->save($fileContent);
     }
 
     protected function submitChallengeAnswer(): bool
