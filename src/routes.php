@@ -13,12 +13,12 @@ return function (App $app) {
 
         if (!$submitResponse) {
             return $response
-                ->withJson([])
+                ->withJson(['message' => 'Internal Server Error'])
                 ->withStatus(500);
         }
 
         return $response
-            ->withJson([])
+            ->withJson(['message' => 'OK'])
             ->withStatus(200);
     });
 };

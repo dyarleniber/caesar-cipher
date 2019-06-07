@@ -1,13 +1,17 @@
 <?php
 
-namespace CaesarCipher\Services;
+namespace CaesarCipher\Services\Implementations;
 
-class ChallengeApi
+use CaesarCipher\Services\Interfaces\IChallengeApi;
+
+class ChallengeApi extends Service implements IChallengeApi
 {
     protected $httpClient;
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->httpClient = new GuzzleHttp\Client(['base_uri' => getenv('CHALLENGE_BASE_URI')]);
     }
 

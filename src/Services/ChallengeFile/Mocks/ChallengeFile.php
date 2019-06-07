@@ -1,8 +1,10 @@
 <?php
 
-namespace CaesarCipher\Actions;
+namespace CaesarCipher\Services\Mocks;
 
-class ChallengeFile
+use CaesarCipher\Services\Interfaces\IChallengeFile;
+
+class ChallengeFile extends Service implements IChallengeFile
 {
     public function save(object $fileContent): bool
     {
