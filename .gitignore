@@ -4,3 +4,4 @@
 !/logs/.gitkeep
 tmp/uploads/*
 !tmp/uploads/.gitkeep
+.phpunit.result.cache

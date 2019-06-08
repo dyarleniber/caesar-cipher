@@ -9,9 +9,9 @@ return function (App $app) {
 
     $app->get('/', function (Request $request, Response $response, array $args) use ($container) {
 
-        $caesarCipherController = $container->get('CaesarCipherController');
+        $caesarCipherController = $container->get('caesarCipherController');
 
-        $submitResponse = $caesarCipherController->submitChallengeAnswer();
+        $submitResponse = $caesarCipherController->submitNewChallengeAnswer();
 
         if (!$submitResponse) {
             return $response

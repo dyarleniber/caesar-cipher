@@ -3,15 +3,28 @@
 namespace CaesarCipher\Services\ChallengeFile\Implementations;
 
 use CaesarCipher\Services\ChallengeFile\Interfaces\IChallengeFile;
-use CaesarCipher\Services\Service;
 
-class ChallengeFile extends Service implements IChallengeFile
+class ChallengeFile implements IChallengeFile
 {
+    protected $uploadFilesPath;
+    protected $challengeFileName;
+
+    public function __construct(string $uploadFilesPath, string $challengeFileName)
+    {
+        $this->uploadFilesPath = $uploadFilesPath;
+        $this->challengeFileName = $challengeFileName;
+    }
+
     public function save(object $fileContent): bool
     {
-        global $settings;
+        \CaesarCipher\Log\Logger::debug(__METHOD__ . ' Object: ' . print_r($fileContent, true));
 
         $formattedFileContent = json_encode($fileContent, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-        return (bool) file_put_contents($settings['uploadFilesPath'] . $settings['challengeFileName'], $formattedFileContent);
+        return (bool) file_put_contents($this->uploadFilesPath . $this->challengeFileName, $formattedFileContent);
+    }
+
+    public function get(): string
+    {
+        return file_get_contents($this->uploadFilesPath . $this->challengeFileName);
     }
 }

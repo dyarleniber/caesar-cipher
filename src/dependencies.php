@@ -11,23 +11,23 @@ return function (App $app) {
         return new \Slim\Views\PhpRenderer($settings['template_path']);
     };
 
-    // monolog
-    $container['logger'] = function ($c) {
-        $settings = $c->get('settings')['logger'];
-        $logger = new \Monolog\Logger($settings['name']);
-        $logger->pushProcessor(new \Monolog\Processor\UidProcessor());
-        $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
-        return $logger;
-    };
-
     // DI configuration
     $isTest = getenv('TEST');
-    if ($isTest !== false) {
+    if ($isTest === false) {
 
-        $container['CaesarCipherController'] = function ($c) {
+        $container['caesarCipherController'] = function ($c) {
+            $uploadFilesPath = $c->get('settings')['uploadFilesPath'];
+            $challengeFileName = $c->get('settings')['challengeFileName'];
+
             $caesarCipher = new CaesarCipher\Services\Cipher\Implementations\CaesarCipher();
-            $challengeFile = new CaesarCipher\Services\ChallengeFile\Implementations\ChallengeFile();
-            $challengeApi = new CaesarCipher\Services\ChallengeApi\Implementations\ChallengeApi();
+            $challengeFile = new CaesarCipher\Services\ChallengeFile\Implementations\ChallengeFile(
+                $uploadFilesPath,
+                $challengeFileName
+            );
+            $challengeApi = new CaesarCipher\Services\ChallengeApi\Implementations\ChallengeApi(
+                $uploadFilesPath,
+                $challengeFileName
+            );
 
             $controller = new CaesarCipher\Controllers\CaesarCipherController(
                 $caesarCipher,
@@ -40,9 +40,15 @@ return function (App $app) {
 
     } else {
 
-        $container['CaesarCipherController'] = function ($c) {
+        $container['caesarCipherController'] = function ($c) {
+            $uploadFilesPath = $c->get('settings')['uploadFilesPath'];
+            $challengeFileName = $c->get('settings')['challengeFileName'];
+
             $caesarCipher = new CaesarCipher\Services\Cipher\Implementations\CaesarCipher();
-            $challengeFile = new CaesarCipher\Services\ChallengeFile\Implementations\ChallengeFile();
+            $challengeFile = new CaesarCipher\Services\ChallengeFile\Implementations\ChallengeFile(
+                $uploadFilesPath,
+                $challengeFileName
+            );
             $challengeApi = new CaesarCipher\Services\ChallengeApi\Mocks\ChallengeApi();
 
             $controller = new CaesarCipher\Controllers\CaesarCipherController(

@@ -36,14 +36,17 @@ class CaesarCipherController extends BaseController
 
             $saveFileResult = $this->challengeFile->save($challengeResponseObj);
             if (!$saveFileResult) {
+                \CaesarCipher\Log\Logger::error('Save challenge file error');
                 return false;
             }
 
             $submitAnswer = $this->challengeApi->submitAnswer();
             if (!$submitAnswer) {
+                \CaesarCipher\Log\Logger::error('Submit challenge answer error');
                 return false;
             }
         } catch (\Throwable $t) {
+            \CaesarCipher\Log\Logger::error(__METHOD__ . ' Error: ' . $t->getMessage());
             return false;
         }
 
