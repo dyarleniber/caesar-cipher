@@ -1,5 +1,3 @@
-# EM CONSTRUÇÃO
-
 # Caesar Cipher
 
 To run the application in development, you can run these commands:
