@@ -27,4 +27,9 @@ class ChallengeFile implements IChallengeFile
     {
         return file_get_contents($this->uploadFilesPath . $this->challengeFileName);
     }
+
+    public function exists(): bool
+    {
+        return file_exists($this->uploadFilesPath . $this->challengeFileName);
+    }
 }

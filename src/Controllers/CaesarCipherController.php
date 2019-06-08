@@ -52,4 +52,13 @@ class CaesarCipherController extends BaseController
 
         return true;
     }
+
+    public function getLastChallengeAnswer(): ?string
+    {
+        if ($this->challengeFile->exists()) {
+            return $this->challengeFile->get();
+        }
+
+        return null;
+    }
 }

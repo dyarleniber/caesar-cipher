@@ -18,7 +18,7 @@ class Logger
         $output = "[%datetime%] %channel% %level_name% %message%\n";
 
         $formatter = new LineFormatter($output, $dateFormat);
-        $stream = new StreamHandler(Logger::LOG_PATH, MonologLogger::DEBUG);
+        $stream = new StreamHandler(Logger::LOG_PATH, MonologLogger::ERROR);
         $stream->setFormatter($formatter);
 
         self::$log = new MonologLogger('LOG');

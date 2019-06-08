@@ -9,4 +9,6 @@ interface IChallengeFile extends Service
     public function save(object $fileContent): bool;
 
     public function get(): string;
+
+    public function exists(): bool;
 }

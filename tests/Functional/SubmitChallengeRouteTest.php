@@ -2,6 +2,8 @@
 
 namespace Tests\Functional;
 
+use Tests\BaseTestCase;
+
 class SubmitChallengeRouteTest extends BaseTestCase
 {
     public function testSubmitChallengeRouteWithSuccess()

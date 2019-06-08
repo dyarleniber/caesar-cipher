@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Functional;
+namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Slim\App;
@@ -24,6 +24,42 @@ class BaseTestCase extends TestCase
     protected $withMiddleware = true;
 
     /**
+     * Slim Application
+     *
+     * @var Slim\App
+     */
+    public $slimApp;
+
+    /**
+     * Slim App configuration
+     */
+    public function slimAppConfigure()
+    {
+        // TEST environment variable for DI
+        putenv("TEST=true");
+
+        // Use the application settings
+        $settings = require __DIR__ . '/../src/settings.php';
+
+        // Instantiate the application
+        $this->slimApp = new App($settings);
+
+        // Set up dependencies
+        $dependencies = require __DIR__ . '/../src/dependencies.php';
+        $dependencies($this->slimApp);
+
+        // Register middleware
+        if ($this->withMiddleware) {
+            $middleware = require __DIR__ . '/../src/middleware.php';
+            $middleware($this->slimApp);
+        }
+
+        // Register routes
+        $routes = require __DIR__ . '/../src/routes.php';
+        $routes($this->slimApp);
+    }
+
+    /**
      * Process the application given a request method and URI
      *
      * @param string $requestMethod the request method (e.g. GET, POST, etc.)
@@ -33,8 +69,7 @@ class BaseTestCase extends TestCase
      */
     public function runApp($requestMethod, $requestUri, $requestData = null)
     {
-        // TEST environment variable for DI
-        putenv("TEST=true");
+        $this->slimAppConfigure();
 
         // Create a mock environment for testing with
         $environment = Environment::mock(
@@ -55,28 +90,8 @@ class BaseTestCase extends TestCase
         // Set up a response object
         $response = new Response();
 
-        // Use the application settings
-        $settings = require __DIR__ . '/../../src/settings.php';
-
-        // Instantiate the application
-        $app = new App($settings);
-
-        // Set up dependencies
-        $dependencies = require __DIR__ . '/../../src/dependencies.php';
-        $dependencies($app);
-
-        // Register middleware
-        if ($this->withMiddleware) {
-            $middleware = require __DIR__ . '/../../src/middleware.php';
-            $middleware($app);
-        }
-
-        // Register routes
-        $routes = require __DIR__ . '/../../src/routes.php';
-        $routes($app);
-
         // Process the application
-        $response = $app->process($request, $response);
+        $response = $this->slimApp->process($request, $response);
 
         // Return the response
         return $response;
