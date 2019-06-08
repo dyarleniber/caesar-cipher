@@ -2,36 +2,44 @@
 
 namespace CaesarCipher\Controllers;
 
-use CaesarCipher\Actions\ChallengeFile;
-use CaesarCipher\Actions\Cipher;
-use CaesarCipher\Services\ChallengeApi;
+use CaesarCipher\Services\Interfaces\IChallengeApi;
+use CaesarCipher\Services\Interfaces\IChallengeFile;
+use CaesarCipher\Services\Interfaces\ICipher;
 
-class CaesarCipherController
+class CaesarCipherController extends BaseController
 {
     protected $cipher;
     protected $challengeFile;
     protected $challengeApi;
 
-    public function __construct()
+    public function __construct(ICipher $cipher, IChallengeFile $challengeFile, IChallengeApi $challengeApi)
     {
-        $this->cipher = new Cipher();
-        $this->challengeFile = new ChallengeFile();
-        $this->challengeApi = new ChallengeApi();
+        $this->cipher = $cipher;
+        $this->challengeFile = $challengeFile;
+        $this->challengeApi = $challengeApi;
+    }
+
+    protected function calculateHash(string $text): string
+    {
+        return sha1($text);
     }
 
     public function submitNewChallengeAnswer(): bool
     {
         try {
-            $challengeResponseObj = $this->getChallengeParams();
-            $challengeResponseObj->decifrado = $this->caesarDecipher($challengeResponseObj->cifrado, (int) $challengeResponseObj->numero_casas);
+            $challengeResponseObj = $this->challengeApi->getParams();
+
+            $this->cipher->setShift((int) $challengeResponseObj->numero_casas);
+
+            $challengeResponseObj->decifrado = $this->cipher->decipher($challengeResponseObj->cifrado);
             $challengeResponseObj->resumo_criptografico = $this->calculateHash($challengeResponseObj->decifrado);
 
-            $saveFileResult = $this->saveChallengeFile($challengeResponseObj);
+            $saveFileResult = $this->challengeFile->save($challengeResponseObj);
             if (!$saveFileResult) {
                 return false;
             }
 
-            $submitAnswer = $this->submitChallengeAnswer();
+            $submitAnswer = $this->challengeApi->submitAnswer();
             if (!$submitAnswer) {
                 return false;
             }
@@ -40,30 +48,5 @@ class CaesarCipherController
         }
 
         return true;
-    }
-
-    protected function getChallengeParams(): object
-    {
-        return $this->challengeApi->getParams();
-    }
-
-    protected function caesarDecipher(string $text, int $shift): string
-    {
-        return $this->cipher->decipher($text, $shift);
-    }
-
-    protected function calculateHash(string $text): string
-    {
-        return sha1($text);
-    }
-
-    protected function saveChallengeFile(object $fileContent): bool
-    {
-        return $this->challengeFile->save($fileContent);
-    }
-
-    protected function submitChallengeAnswer(): bool
-    {
-        return $this->challengeApi->submitAnswer();
     }
 }

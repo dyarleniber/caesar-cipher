@@ -8,7 +8,15 @@ class ChallengeApi extends Service implements IChallengeApi
 {
     public function getParams(): object
     {
-        $httpResponseBody = '';
+        $httpResponseBody = '
+            {
+                "numero_casas": 12,
+                "token": "",
+                "cifrado": "ur kagd bmdqzfe zqhqd tmp otuxpdqz, otmzoqe mdq kag iaz’f, quftqd. puow omhqff",
+                "decifrado": "",
+                "resumo_criptografico": ""
+            }
+        ';
 
         return json_decode($httpResponseBody);
     }

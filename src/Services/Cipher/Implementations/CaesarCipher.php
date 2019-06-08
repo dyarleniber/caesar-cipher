@@ -8,10 +8,8 @@ class CaesarCipher extends Service implements ICipher
 {
     protected $shift;
 
-    public function __construct(string $shift)
+    public function setShift(string $shift)
     {
-        parent::__construct();
-
         $this->shift = $shift;
     }
 
