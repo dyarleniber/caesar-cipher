@@ -1,8 +1,9 @@
 <?php
 
-namespace CaesarCipher\Services\Mocks;
+namespace CaesarCipher\Services\ChallengeApi\Mocks;
 
-use CaesarCipher\Services\Interfaces\IChallengeApi;
+use CaesarCipher\Services\ChallengeApi\Interfaces\IChallengeApi;
+use CaesarCipher\Services\Service;
 
 class ChallengeApi extends Service implements IChallengeApi
 {

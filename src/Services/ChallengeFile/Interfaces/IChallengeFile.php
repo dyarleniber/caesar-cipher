@@ -1,6 +1,6 @@
 <?php
 
-namespace CaesarCipher\Services\Interfaces;
+namespace CaesarCipher\Services\ChallengeFile\Interfaces;
 
 use CaesarCipher\Services\Service;
 

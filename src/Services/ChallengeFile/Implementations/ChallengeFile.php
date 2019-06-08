@@ -1,8 +1,9 @@
 <?php
 
-namespace CaesarCipher\Services\Implementations;
+namespace CaesarCipher\Services\ChallengeFile\Implementations;
 
-use CaesarCipher\Services\Interfaces\IChallengeFile;
+use CaesarCipher\Services\ChallengeFile\Interfaces\IChallengeFile;
+use CaesarCipher\Services\Service;
 
 class ChallengeFile extends Service implements IChallengeFile
 {

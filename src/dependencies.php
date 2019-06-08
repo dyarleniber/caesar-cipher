@@ -25,11 +25,11 @@ return function (App $app) {
     if ($isTest !== false) {
 
         $container['CaesarCipherController'] = function ($c) {
-            $caesarCipher = new \CaesarCipher\Services\Implementations\CaesarCipher();
-            $challengeFile = new \CaesarCipher\Services\Implementations\ChallengeFile();
-            $challengeApi = new \CaesarCipher\Services\Implementations\ChallengeApi();
+            $caesarCipher = new CaesarCipher\Services\Cipher\Implementations\CaesarCipher();
+            $challengeFile = new CaesarCipher\Services\ChallengeFile\Implementations\ChallengeFile();
+            $challengeApi = new CaesarCipher\Services\ChallengeApi\Implementations\ChallengeApi();
 
-            $controller = new \CaesarCipher\Controllers\CaesarCipherController(
+            $controller = new CaesarCipher\Controllers\CaesarCipherController(
                 $caesarCipher,
                 $challengeFile,
                 $challengeApi
@@ -41,11 +41,11 @@ return function (App $app) {
     } else {
 
         $container['CaesarCipherController'] = function ($c) {
-            $caesarCipher = new \CaesarCipher\Services\Implementations\CaesarCipher();
-            $challengeFile = new \CaesarCipher\Services\Implementations\ChallengeFile();
-            $challengeApi = new \CaesarCipher\Services\Mocks\ChallengeApi();
+            $caesarCipher = new CaesarCipher\Services\Cipher\Implementations\CaesarCipher();
+            $challengeFile = new CaesarCipher\Services\ChallengeFile\Implementations\ChallengeFile();
+            $challengeApi = new CaesarCipher\Services\ChallengeApi\Mocks\ChallengeApi();
 
-            $controller = new \CaesarCipher\Controllers\CaesarCipherController(
+            $controller = new CaesarCipher\Controllers\CaesarCipherController(
                 $caesarCipher,
                 $challengeFile,
                 $challengeApi

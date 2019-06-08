@@ -2,9 +2,9 @@
 
 namespace CaesarCipher\Controllers;
 
-use CaesarCipher\Services\Interfaces\IChallengeApi;
-use CaesarCipher\Services\Interfaces\IChallengeFile;
-use CaesarCipher\Services\Interfaces\ICipher;
+use CaesarCipher\Services\ChallengeApi\Interfaces\IChallengeApi;
+use CaesarCipher\Services\ChallengeFile\Interfaces\IChallengeFile;
+use CaesarCipher\Services\Cipher\Interfaces\ICipher;
 
 class CaesarCipherController extends BaseController
 {

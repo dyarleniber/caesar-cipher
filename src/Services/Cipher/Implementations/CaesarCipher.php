@@ -1,8 +1,9 @@
 <?php
 
-namespace CaesarCipher\Services\Implementations;
+namespace CaesarCipher\Services\Cipher\Implementations;
 
-use CaesarCipher\Services\Interfaces\ICipher;
+use CaesarCipher\Services\Cipher\Interfaces\ICipher;
+use CaesarCipher\Services\Service;
 
 class CaesarCipher extends Service implements ICipher
 {
