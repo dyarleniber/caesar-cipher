@@ -1,4 +1,4 @@
-# Caesar Cipher
+# Caesar Cipher using PHP 7.2, Slim Framework and PHPUnit for Codenation challenge.
 
 To run the application in development, you can run these commands:
 
